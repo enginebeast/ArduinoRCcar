@@ -2,19 +2,24 @@
 #include <SoftwareSerial.h>
 
 Servo steer;
-int in1 = 4;
-int in2 = 5;
-int speed = 6;
-int Rx = 7; //Receive
-int Tx = 8; //Transmit
-int Servo = 9;
+int in1 = 3;
+int in2 = 4;
+int speed_a = 5;
+int speed_b = 6;
+int in3 = 7;
+int in4 = 8;
+int Rx = 9; //Receive
+int Tx = 10; //Transmit
 
 SoftwareSerial BtSerial(Rx,Tx);
 
 void setup() {
-  pinMode(speed, OUTPUT);
+  pinMode(speed_a, OUTPUT);
   pinMode(in1, OUTPUT);
   pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+  pinMode(speed_b, OUTPUT);
 
   Serial.begin(9600);
   BtSerial.begin(9600);
@@ -29,36 +34,66 @@ void loop() {
       case 0:
       digitalWrite(in1, HIGH);
       digitalWrite(in2, LOW);
-      analogWrite(speed , 0);
+      digitalWrite(in3, HIGH);
+      digitalWrite(in4, LOW);
+      analogWrite(speed_a , 0);
+      analogWrite(speed_b , 0);
+      
       break;
 
       //Move front
       case 1:
       digitalWrite(in1, HIGH);
       digitalWrite(in2, LOW);
-      analogWrite(speed , 255);
+      digitalWrite(in3, HIGH);
+      digitalWrite(in4, LOW);
+      analogWrite(speed_a , 255);
+      analogWrite(speed_b , 255);
+      
       break;
       
       //Move back
       case 2:
       digitalWrite(in1, LOW);
       digitalWrite(in2, HIGH);
-      analogWrite(speed , 255);
+      digitalWrite(in3, LOW);
+      digitalWrite(in4, HIGH);
+      analogWrite(speed_a , 255);
+      analogWrite(speed_b , 255);
+
       break;
 
       //Center
       case 3:
-      steer.writeMicroseconds(1500);
+      digitalWrite(in1, HIGH);
+      digitalWrite(in2, LOW);
+      digitalWrite(in3, HIGH);
+      digitalWrite(in4, LOW);
+      analogWrite(speed_a , 0);
+      analogWrite(speed_b , 0);
+      
       break;
 
       //Left
       case 4:
-      steer.writeMicroseconds(2000);
+      digitalWrite(in1, LOW);
+      digitalWrite(in2, HIGH);
+      digitalWrite(in3, HIGH);
+      digitalWrite(in4, LOW);
+      analogWrite(speed_a , 255);
+      analogWrite(speed_b , 255);
+
       break;
       
       //Right
       case 5:
-      steer.writeMicroseconds(1000);
+      digitalWrite(in1, HIGH);
+      digitalWrite(in2, LOW);
+      digitalWrite(in3, LOW);
+      digitalWrite(in4, HIGH);
+      analogWrite(speed_a , 255);
+      analogWrite(speed_b , 255);
+
       break;
     }
   }
